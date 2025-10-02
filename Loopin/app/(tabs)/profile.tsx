@@ -25,7 +25,7 @@ function Profile() {
       </ThemedText>
       <ScrollView
         contentContainerStyle={{
-          gap: 20, 
+          gap: 20,
         }}
         style={{
           padding: 10,
@@ -110,7 +110,7 @@ function Profile() {
           </View>
         </View>
         {/* Tabs GO here */}
-        <Button title="Continue" onPress={() => router.replace("/login")} />
+        <Button title="LOGOUT" onPress={() => router.replace("/login")} />
       </ScrollView>
     </SafeAreaView>
   );

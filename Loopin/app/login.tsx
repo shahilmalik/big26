@@ -24,6 +24,7 @@ function Login() {
             backgroundColor: debug ? "red" : "",
             gap: "20",
             padding: 10,
+            paddingBottom: 25,
           }}
         >
           <CustomButton
@@ -41,7 +42,7 @@ function Login() {
 
       {screen === "signin" && <SignIn setState={setScreen} />}
 
-      {screen === "signup" && <SignUp setState={setScreen}/>}
+      {screen === "signup" && <SignUp setState={setScreen} />}
     </SafeAreaView>
   );
 }

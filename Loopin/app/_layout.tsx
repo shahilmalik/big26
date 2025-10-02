@@ -10,7 +10,7 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
 export const unstable_settings = {
-  anchor: "(tabs)",
+  anchor: "/",
 };
 
 export default function RootLayout() {
@@ -18,12 +18,20 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack initialRouteName="login">
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{ headerShown: false, gestureEnabled: false }}
+        />
         <Stack.Screen
           name="login"
-          options={{ headerShown: false, headerTitle: "Login" }}
+          options={{ headerShown: false, gestureEnabled: false }}
         />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        {/* <Stack.Screen
+          name="login"
+          options={{ headerShown: false, headerTitle: "Login" }}
+        /> */}
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
