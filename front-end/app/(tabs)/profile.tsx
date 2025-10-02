@@ -1,7 +1,8 @@
 import TitleCount from "@/components/profile/TitleCount";
 import { ThemedText } from "@/components/themed-text";
+import { router } from "expo-router";
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 const data = {
   name: "Rahim",
@@ -109,6 +110,7 @@ function Profile() {
           </View>
         </View>
         {/* Tabs GO here */}
+        <Button title="Continue" onPress={() => router.replace("/login")} />
       </ScrollView>
     </SafeAreaView>
   );
