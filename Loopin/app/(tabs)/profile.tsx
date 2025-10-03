@@ -13,7 +13,12 @@ const data = {
 const debug = 0;
 function Profile() {
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: "black",
+      }}
+    >
       <ThemedText
         style={{
           textAlign: "center",

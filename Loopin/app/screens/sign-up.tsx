@@ -1,7 +1,6 @@
 import CustomView from "@/components/CustomView";
 import CustomButton from "@/components/loginPage/CustomButton";
 import CustomInput from "@/components/loginPage/CustomInput";
-import { ThemedText } from "@/components/themed-text";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -25,11 +24,16 @@ function SignUp({ setState }: signupType) {
   const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [dob, setDob] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [states, setStates] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
 
   const [step, setStep] = useState<number>(0);
 
   useEffect(() => {
-    if (step == 3) {
+    if (step == 5) {
       router.replace("/(tabs)/profile");
     }
   }, [step]);
@@ -37,7 +41,7 @@ function SignUp({ setState }: signupType) {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0} // tweak offset so inputs aren’t cut off by navbar
+      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
     >
       <Text
         style={{
@@ -80,11 +84,6 @@ function SignUp({ setState }: signupType) {
               {step == 2 && (
                 <CustomView>
                   <CustomInput
-                    value={name}
-                    setValue={setName}
-                    placeholder="Name"
-                  />
-                  <CustomInput
                     value={username}
                     setValue={setUsername}
                     placeholder="Username"
@@ -96,10 +95,47 @@ function SignUp({ setState }: signupType) {
                   />
                 </CustomView>
               )}
+              {step == 3 && (
+                <CustomView>
+                  <CustomInput
+                    value={name}
+                    setValue={setName}
+                    placeholder="Name"
+                  />
+                  <CustomInput
+                    value={gender}
+                    setValue={setGender}
+                    placeholder="Gender"
+                  />
+                  <CustomInput
+                    value={dob}
+                    setValue={setDob}
+                    placeholder="DOB"
+                  />
+                </CustomView>
+              )}
+              {step == 4 && (
+                <CustomView>
+                  <CustomInput
+                    value={city}
+                    setValue={setCity}
+                    placeholder="City"
+                  />
+                  <CustomInput
+                    value={states}
+                    setValue={setStates}
+                    placeholder="State"
+                  />
+                  <CustomInput
+                    value={country}
+                    setValue={setCountry}
+                    placeholder="Country"
+                  />
+                </CustomView>
+              )}
 
               <CustomButton
-                title={step == 2 ? "Sign up" : "Next"}
-                // onPress={() => router.replace("/(tabs)")}
+                title={step == 4 ? "Sign up" : "Next"}
                 onPress={() => setStep((prev) => prev + 1)}
               />
               {step == 0 && (
@@ -133,7 +169,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     padding: 16,
-    // backgroundColor: "red",
   },
   wrapper: {
     gap: 10,
