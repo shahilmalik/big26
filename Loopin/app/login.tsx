@@ -1,19 +1,39 @@
 import CustomButton from "@/components/loginPage/CustomButton";
-import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SignIn from "./screens/sign-in";
 import SignUp from "./screens/sign-up";
-const debug = 0;
+import { ThemedText } from "@/components/themed-text";
+import { useGlobal } from "./context/GlobalContext";
+import { getTheme, storeTheme } from "@/hooks/useColors";
+import { useTheme } from "@/hooks/useColors";
 function Login() {
+  const debug = 0;
+  const { colors } = useTheme();
+  const { theme, toggleTheme } = useGlobal();
+  const [themeName, setThemeName] = useState<"light" | "dark" | "native">(
+    "native"
+  );
+  useEffect(() => {
+    storeTheme(theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const loadTheme = async () => {
+      const theme = await getTheme();
+      setThemeName(theme || "native");
+    };
+    loadTheme();
+  }, [theme]);
+
   const [screen, setScreen] = useState<"home" | "signin" | "signup">("home");
   return (
     <SafeAreaView
       style={{
         display: "flex",
         justifyContent: "flex-end",
-        backgroundColor: debug ? "green" : "",
+        backgroundColor: colors.background,
         height: "100%",
       }}
     >
@@ -24,19 +44,33 @@ function Login() {
             backgroundColor: debug ? "red" : "",
             gap: "20",
             padding: 10,
-            paddingBottom: 25,
+            justifyContent: "space-between",
+            flex: 1,
           }}
         >
-          <CustomButton
-            title="SIGN IN"
-            bgColor="black"
-            color="white"
-            onPress={() => setScreen("signin")}
-          />
-          <CustomButton
-            title="CREATE ACCOUNT"
-            onPress={() => setScreen("signup")}
-          />
+          <View
+            style={{
+              backgroundColor: debug ? "yellow" : "",
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ThemedText>HEllo</ThemedText>
+          </View>
+          <View style={{ gap: 10, backgroundColor: debug ? "pink" : "" }}>
+            <CustomButton
+              title="SIGN IN"
+              bgColor="black"
+              color="white"
+              onPress={() => setScreen("signin")}
+            />
+            <CustomButton
+              title="CREATE ACCOUNT"
+              onPress={() => setScreen("signup")}
+            />
+            {/* <CustomButton title={themeName} onPress={() => toggleTheme()} /> */}
+          </View>
         </View>
       )}
 
