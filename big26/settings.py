@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'authentication',
+    'profiles',
 ]
 
 MIDDLEWARE = [
@@ -106,7 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "authentication.models.DeviceTokenAuthentication",
+    ]
+}
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -137,3 +143,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://redis:6379/0')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  
+
+AUTH_TOKEN_MODEL = 'authentication.DeviceToken'
+
+AUTH_USER_MODEL = 'profiles.CustomUser'
