@@ -2,6 +2,7 @@
 import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import { lightTheme, darkTheme } from "@/utils/colorSheet";
 
 // Save to async
 export const storeTheme = async (value: "dark" | "light" | "native") => {
@@ -21,18 +22,6 @@ export const getTheme = async () => {
     console.error("Error reading theme", e);
     return null;
   }
-};
-
-const lightTheme = {
-  background: "#FFFFFF",
-  text: "#000000",
-  primary: "#007AFF",
-};
-
-const darkTheme = {
-  background: "#000000",
-  text: "#FFFFFF",
-  primary: "#0A84FF",
 };
 
 export function useTheme() {

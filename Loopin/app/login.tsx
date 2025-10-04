@@ -1,11 +1,11 @@
 import CustomButton from "@/components/loginPage/CustomButton";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SignIn from "./screens/sign-in";
-import SignUp from "./screens/sign-up";
+import SignIn from "../screens/sign-in";
+import SignUp from "../screens/sign-up";
 import { ThemedText } from "@/components/themed-text";
-import { useGlobal } from "./context/GlobalContext";
+import { useGlobal } from "../context/GlobalContext";
 import { getTheme, storeTheme } from "@/hooks/useColors";
 import { useTheme } from "@/hooks/useColors";
 function Login() {
@@ -56,7 +56,9 @@ function Login() {
               alignItems: "center",
             }}
           >
-            <ThemedText>HEllo</ThemedText>
+            <Text style={{ color: colors.text, fontSize: 24 }}>
+              Welcom To Our Application
+            </Text>
           </View>
           <View style={{ gap: 10, backgroundColor: debug ? "pink" : "" }}>
             <CustomButton
@@ -67,6 +69,7 @@ function Login() {
             />
             <CustomButton
               title="CREATE ACCOUNT"
+              color="black"
               onPress={() => setScreen("signup")}
             />
             {/* <CustomButton title={themeName} onPress={() => toggleTheme()} /> */}
