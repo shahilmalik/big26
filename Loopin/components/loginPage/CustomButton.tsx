@@ -20,7 +20,7 @@ function CustomButton({
         backgroundColor: bgColor,
         padding: 12,
         borderRadius: 8,
-        borderColor: "white",
+        borderColor: color,
         borderWidth: 2,
         width: "100%",
       }}
