@@ -72,7 +72,10 @@ function Login() {
               color="black"
               onPress={() => setScreen("signup")}
             />
-            {/* <CustomButton title={themeName} onPress={() => toggleTheme()} /> */}
+            <CustomButton
+              title={`DEV: ${themeName}`}
+              onPress={() => toggleTheme()}
+            />
           </View>
         </View>
       )}
