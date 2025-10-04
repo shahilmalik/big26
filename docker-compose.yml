@@ -1,0 +1,67 @@
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    # command: >
+    #   sh -c "python manage.py collectstatic --noinput &&
+    #         python manage.py migrate &&
+    #         gunicorn big26.wsgi:application --bind 0.0.0.0:8000"
+    command: >
+      sh -c "python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:8000"
+
+    volumes:
+      - ./backend:/app
+      - static_volume:/app/staticfiles
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+
+  celery:
+    build:
+      context: .
+      dockerfile: docker/celery.Dockerfile
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - backend
+      - redis
+      - db
+    env_file:
+      - .env
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  db:
+    build:
+      context: .
+      dockerfile: docker/database.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # fe:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/frontend.Dockerfile
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "3000:3000"
+
+volumes:
+  postgres_data:
+  static_volume:
+
