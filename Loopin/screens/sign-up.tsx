@@ -13,7 +13,7 @@ import {
   ScrollView,
   Text,
 } from "react-native";
-
+import env from "@/env";
 type signupType = {
   setState: any;
 };
@@ -37,6 +37,48 @@ function SignUp({ setState }: signupType) {
       router.replace("/(tabs)/profile");
     }
   }, [step]);
+
+  const handleSignup = async () => {
+  const signupData = {
+    email,
+    otp,
+    username,
+    password,
+    name,
+    gender,
+    dob,
+    city,
+    state: states,
+    country,
+  };
+
+  try {
+    const response = await fetch(`${env.API_URL}/api/auth/signup/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signupData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Signup error:", errorData);
+      alert("Signup failed. Please check your details.");
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Signup success:", data);
+
+    // You can redirect or store token here if your API returns it
+    setStep(5); // Move to next step (profile screen)
+  } catch (error) {
+    console.error("Network error:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -136,8 +178,15 @@ function SignUp({ setState }: signupType) {
 
               <CustomButton
                 title={step == 4 ? "Sign up" : "Next"}
-                onPress={() => setStep((prev) => prev + 1)}
+                onPress={() => {
+                  if (step === 4) {
+                    handleSignup();
+                  } else {
+                    setStep((prev) => prev + 1);
+                  }
+                }}
               />
+
               {step == 0 && (
                 <CustomButton
                   bgColor="black"

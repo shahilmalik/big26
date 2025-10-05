@@ -1,7 +1,3 @@
-import CustomButton from "@/components/loginPage/CustomButton";
-import CustomInput from "@/components/loginPage/CustomInput";
-import { ThemedText } from "@/components/themed-text";
-import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   View,
@@ -12,34 +8,60 @@ import {
   Keyboard,
   ScrollView,
   Text,
+  Alert,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import CustomButton from "@/components/loginPage/CustomButton";
+import CustomInput from "@/components/loginPage/CustomInput";
+import * as SecureStore from "expo-secure-store";
+import { router } from 'expo-router';
+import env from "@/env";
+
 
 function SignIn({ setState }: any) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [login, setLogin] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${env.API_URL}/api/auth/login/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username_or_email: email, 
+          password: password,
+        }),
+      });
+
+      if (!response.ok) {
+        Alert.alert("Login Failed", "Invalid credentials");
+        setLoading(false);
+        return;
+      }
+
+      const data = await response.json();
+      const token = data.token; // or data.key / access depending on your backend
+
+      await SecureStore.setItemAsync("userToken", token);
+      // 👇 Navigate to the main app screen
+      router.replace("/(tabs)");
+    } catch (error) {
+      console.error("Login error:", error);
+      Alert.alert("Error", "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    // <SafeAreaView>
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
     >
-      <Text
-        style={{
-          color: "white",
-          fontWeight: "bold",
-          fontSize: 30,
-          marginBottom: 15,
-          top: 10,
-          textAlign: "center",
-        }}
-      >
-        SIGN IN
-      </Text>
-      {/* Dismiss keyboard when tapping outside */}
+      <Text style={styles.header}>SIGN IN</Text>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -58,8 +80,8 @@ function SignIn({ setState }: any) {
                 placeholder="Password"
               />
               <CustomButton
-                title="Sign in"
-                onPress={() => router.replace("/(tabs)")}
+                title={loading ? "Signing in..." : "Sign in"}
+                onPress={handleLogin}
               />
               <CustomButton
                 bgColor="black"
@@ -78,13 +100,20 @@ function SignIn({ setState }: any) {
 export default SignIn;
 
 const styles = StyleSheet.create({
+  header: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 30,
+    marginBottom: 15,
+    top: 10,
+    textAlign: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
     padding: 16,
-    // backgroundColor: "red",
   },
   wrapper: {
     gap: 10,
@@ -92,14 +121,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     width: "100%",
-  },
-  input: {
-    width: 300,
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 2,
-    paddingHorizontal: 8,
-    borderRadius: 10,
-    color: "white",
   },
 });
