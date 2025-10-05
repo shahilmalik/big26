@@ -15,4 +15,4 @@ COPY Loopin/ .
 EXPOSE 19000 19001 19002
 
 # Run using the local Expo CLI inside node_modules
-CMD ["npx", "expo", "start", "--tunnel", "--host", "0.0.0.0"]
+CMD ["npx", "expo", "start", "--tunnel"]
