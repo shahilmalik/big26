@@ -23,7 +23,7 @@ function ProfileEditUsername() {
   }, [navigation, userName]);
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 10 }}>
+    <View style={{ flex: 1, padding: 20 }}>
       <MetaInput
         placeholder="Username"
         value={userName}

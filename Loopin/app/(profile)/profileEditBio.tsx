@@ -18,13 +18,13 @@ function ProfileEditBio() {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      HeaderTitle: "Biodddddddddddd",
+      HeaderTitle: "Bio",
       headerRight: () => <Button title="Save" onPress={handleSave} />,
     });
   }, [navigation, bio]);
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 10 }}>
+    <View style={{ flex: 1, padding: 20 }}>
       <MetaInput
         placeholder="Bio"
         value={bio}

@@ -24,7 +24,7 @@ function ProfileEditName() {
   }, [navigation, name]);
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 10 }}>
+    <View style={{ flex: 1, padding: 20 }}>
       <MetaInput placeholder="Name" value={name} setValue={setName} autoFocus />
     </View>
   );
