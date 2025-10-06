@@ -1,15 +1,34 @@
-import React, { createContext, useState, useContext } from "react";
+import { getTheme, storeTheme } from "@/hooks/useColors";
+import React, { createContext, useState, useContext, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Profiledata } from "@/utils/mockData";
+const printAllAsyncStorageItems = async () => {
+  try {
+    const keys = await AsyncStorage.getAllKeys();
+    const result = await AsyncStorage.multiGet(keys);
 
+    console.log("===== AsyncStorage Contents =====");
+    result.forEach(([key, value]) => {
+      console.log(`${key}: ${value}`);
+    });
+  } catch (error) {
+    console.error("Error reading AsyncStorage:", error);
+  }
+};
+printAllAsyncStorageItems();
 type GlobalContextType = {
   theme: "dark" | "light" | "native";
   setTheme: React.Dispatch<React.SetStateAction<"dark" | "light" | "native">>;
   toggleTheme: () => void;
+  profileData: any;
+  setProfileData: any;
 };
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<"dark" | "light" | "native">("native");
+  const [profileData, setProfileData] = useState(Profiledata);
   const toggleTheme = () => {
     setTheme((prev) => {
       if (prev === "light") return "dark";
@@ -17,8 +36,11 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
       return "light";
     });
   };
+
   return (
-    <GlobalContext.Provider value={{ theme, setTheme, toggleTheme }}>
+    <GlobalContext.Provider
+      value={{ theme, setTheme, toggleTheme, profileData, setProfileData }}
+    >
       {children}
     </GlobalContext.Provider>
   );

@@ -7,15 +7,13 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
-  Text,
   Alert,
 } from "react-native";
 import CustomButton from "@/components/loginPage/CustomButton";
 import CustomInput from "@/components/loginPage/CustomInput";
 import * as SecureStore from "expo-secure-store";
-import { router } from 'expo-router';
+import { router } from "expo-router";
 import env from "@/env";
-
 
 function SignIn({ setState }: any) {
   const [email, setEmail] = useState<string>("");
@@ -30,7 +28,7 @@ function SignIn({ setState }: any) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username_or_email: email, 
+          username_or_email: email,
           password: password,
         }),
       });
@@ -57,11 +55,10 @@ function SignIn({ setState }: any) {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      // style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
     >
-      <Text style={styles.header}>SIGN IN</Text>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -80,12 +77,14 @@ function SignIn({ setState }: any) {
                 placeholder="Password"
               />
               <CustomButton
+                style={{ backgroundColor: "black" }}
+                color="white"
                 title={loading ? "Signing in..." : "Sign in"}
                 onPress={handleLogin}
               />
               <CustomButton
-                bgColor="black"
-                color="white"
+                style={{ backgroundColor: "white" }}
+                color="black"
                 title="Don't have an account?"
                 onPress={() => setState("signup")}
               />
@@ -102,6 +101,7 @@ export default SignIn;
 const styles = StyleSheet.create({
   header: {
     color: "white",
+    backgroundColor: "red",
     fontWeight: "bold",
     fontSize: 30,
     marginBottom: 15,

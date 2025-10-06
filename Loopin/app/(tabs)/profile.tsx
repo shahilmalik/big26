@@ -1,33 +1,39 @@
 import TitleCount from "@/components/profile/TitleCount";
 import { ThemedText } from "@/components/themed-text";
 import { router } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-const data = {
-  name: "Rahim",
-  username: "@ebrahim",
-  bio: "Hello This is Me and this is my biography. Feel Free to add your own bio here.",
-};
+import { storeTheme, useTheme } from "@/hooks/useColors";
+import CustomButton from "@/components/loginPage/CustomButton";
+import { useGlobal } from "@/context/GlobalContext";
 
 const debug = 0;
 function Profile() {
+  const { colors } = useTheme();
+  const { profileData } = useGlobal();
+  // console.log(profileData, "PROFILE DATA");
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: colors.background,
+        // backgroundColor: 'green',
       }}
     >
+      {/* <View style={{ flexDirection: "row", justifyContent: "space-between" }}> */}
       <ThemedText
         style={{
           textAlign: "center",
           fontWeight: "bold",
           fontSize: 24,
+          color: colors.text,
         }}
       >
         Profile
       </ThemedText>
+
+      {/* </View> */}
       <ScrollView
         contentContainerStyle={{
           gap: 20,
@@ -79,9 +85,14 @@ function Profile() {
             }}
           >
             <ThemedText
-              style={{ fontSize: 20, fontWeight: "bold", marginVertical: 10 }}
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                marginVertical: 10,
+                color: colors.text,
+              }}
             >
-              {data.name} |{" "}
+              {profileData.name} |{" "}
               <Text
                 style={{
                   fontWeight: "normal",
@@ -90,10 +101,12 @@ function Profile() {
                   marginLeft: 10,
                 }}
               >
-                {data.username}
+                @{profileData.userName}
               </Text>
             </ThemedText>
-            <ThemedText style={{ flexShrink: 1 }}>{data.bio}</ThemedText>
+            <ThemedText style={{ flexShrink: 1, color: colors.text }}>
+              {profileData.bio}
+            </ThemedText>
           </View>
         </View>
 
@@ -115,7 +128,18 @@ function Profile() {
           </View>
         </View>
         {/* Tabs GO here */}
-        <Button title="LOGOUT" onPress={() => router.replace("/login")} />
+        <View style={{ flexDirection: "row", width: "48%", gap:5 }}>
+          <CustomButton
+            title="Edit Profile"
+            color="black"
+            onPress={() => router.push("/profileEdit")}
+            style={{ backgroundColor: "white" }}
+          />
+          <CustomButton
+            title="LOGOUT"
+            onPress={() => router.replace("/login")}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
