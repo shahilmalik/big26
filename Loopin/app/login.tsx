@@ -1,13 +1,13 @@
 import CustomButton from "@/components/loginPage/CustomButton";
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SignIn from "../screens/sign-in";
 import SignUp from "../screens/sign-up";
-import { ThemedText } from "@/components/themed-text";
 import { useGlobal } from "../context/GlobalContext";
 import { getTheme, storeTheme } from "@/hooks/useColors";
 import { useTheme } from "@/hooks/useColors";
+import { router } from "expo-router";
 function Login() {
   const debug = 0;
   const { colors } = useTheme();
@@ -29,18 +29,22 @@ function Login() {
 
   const [screen, setScreen] = useState<"home" | "signin" | "signup">("home");
   return (
-    <SafeAreaView
-      edges={["top"]}
-      style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        backgroundColor: debug ? "green" : "#22333b",
-        // backgroundColor: colors.background,
-        height: "100%",
-      }}
+    <KeyboardAvoidingView
+      style={{ backgroundColor: colors.background }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
-      {/* SIGN in / Create account page */}
-      {screen === "home" && (
+      <SafeAreaView
+        edges={["top"]}
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          backgroundColor: debug ? "green" : colors.loginScreenBg,
+          // backgroundColor: colors.background,
+          height: "100%",
+        }}
+      >
+        {/* SIGN in / Create account page */}
         <View
           style={{
             backgroundColor: debug ? "red" : "",
@@ -52,40 +56,38 @@ function Login() {
         >
           <View
             style={{
-              flex: 3,
+              flex: screen === "home" ? 3 : 1,
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: debug ? "red" : "",
             }}
           >
-            <ThemedText
+            <Text
               style={{
                 fontSize: 30,
                 fontWeight: "bold",
-                padding: 5,
                 textAlign: "center",
+                color: "white",
               }}
             >
               Change Starts Here,
-            </ThemedText>
-            <ThemedText
+            </Text>
+            <Text
               style={{
                 fontSize: 30,
                 fontWeight: "bold",
-                padding: 5,
                 textAlign: "center",
+                color: "white",
               }}
             >
               Spreads Everywhere
-            </ThemedText>
+            </Text>
           </View>
           <View
             style={{
               flex: 2,
               borderTopLeftRadius: 40,
               borderTopRightRadius: 40,
-              borderColor: "yellow",
-              // borderWidth: 2,
               borderBottomWidth: 0,
               backgroundColor: debug ? "blue" : "#eae0d6",
               padding: 20,
@@ -94,58 +96,72 @@ function Login() {
           >
             <View
               style={{
-                // backgroundColor: debug ? "yellow" : "",
+                backgroundColor: debug ? "yellow" : "",
                 flex: 2,
                 justifyContent: "center",
                 alignItems: "center",
                 gap: 20,
               }}
             >
-              <Text
-                style={{ color: "black", fontWeight: "bold", fontSize: 24 }}
+              {screen === "home" && (
+                <>
+                  <Text
+                    style={{ color: "black", fontWeight: "bold", fontSize: 24 }}
+                  >
+                    Proximum
+                  </Text>
+                  <Text style={{ textAlign: "center" }}>
+                    See what’s happening in your city, state, or country. Chat
+                    with nearby users, join local groups, and share your
+                    thoughts—anonymously or openly. With location-based chats
+                    and updates, Proximum keeps you connected to the world
+                    around you.
+                  </Text>
+                </>
+              )}
+              <View
+                style={{
+                  gap: 10,
+                  backgroundColor: debug ? "pink" : "",
+                  // display: "flex",
+                  // flexDirection: "row",
+                  justifyContent: "space-around",
+                  width: "100%",
+                }}
               >
-                Proximum
-              </Text>
-              <Text style={{ textAlign: "center" }}>
-                See what’s happening in your city, state, or country. Chat with
-                nearby users, join local groups, and share your
-                thoughts—anonymously or openly. With location-based chats and
-                updates, Proximum keeps you connected to the world around you.
-              </Text>
-            </View>
-            <View
-              style={{
-                gap: 10,
-                backgroundColor: debug ? "pink" : "",
-                display: "flex",
-                flexDirection: "row",
-                width: "50%",
-              }}
-            >
-              <CustomButton
-                title="SIGN IN"
-                bgColor="black"
-                color="white"
-                onPress={() => setScreen("signin")}
-              />
-              <CustomButton
-                title="CREATE ACCOUNT"
-                color="black"
-                onPress={() => setScreen("signup")}
-              />
-              {/* <CustomButton
-                title={`DEV: ${themeName}`}
-                onPress={() => toggleTheme()}
-              /> */}
+                {screen === "home" && (
+                  <View style={{ flexDirection: "row", width: "50%", gap: 5 }}>
+                    <CustomButton
+                      title="SIGN IN"
+                      color="white"
+                      onPress={() => setScreen("signin")}
+                      style={{ backgroundColor: "black" }}
+                    />
+                    {/* <CustomButton
+                      title="CREATE ACCOUNT"
+                      color="black"
+                      onPress={() => setScreen("signup")}
+                    /> */}
+                    {/* <CustomButton
+                      title={`${themeName}`}
+                      color="black"
+                      onPress={() => toggleTheme()}
+                    /> */}
+                    <CustomButton
+                      title={`PROFILE`}
+                      color="black"
+                      onPress={() => router.replace("/(tabs)/profile")}
+                    />
+                  </View>
+                )}
+                {screen === "signin" && <SignIn setState={setScreen} />}
+                {screen === "signup" && <SignUp setState={setScreen} />}
+              </View>
             </View>
           </View>
         </View>
-      )}
-
-      {screen === "signin" && <SignIn setState={setScreen} />}
-
-      {screen === "signup" && <SignUp setState={setScreen} />}
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

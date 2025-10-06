@@ -1,5 +1,5 @@
 // hooks/useTheme.ts
-import { useColorScheme } from "react-native";
+import { useColorScheme, Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/utils/colorSheet";
@@ -26,10 +26,11 @@ export const getTheme = async () => {
 
 export function useTheme() {
   const systemTheme = useColorScheme(); //native Theme
+  // console.log(systemTheme, Platform.OS, "System Theme");
   const [selectedTheme, setSelectedTheme] = useState<
     "light" | "dark" | "native"
   >("native");
-
+  // console.log(selectedTheme, "Selected Theme");
   useEffect(() => {
     const loadTheme = async () => {
       const theme = await getTheme();

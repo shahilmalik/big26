@@ -5,18 +5,18 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     height: 50,
-    borderColor: "gray",
+    // borderColor: "gray",
     borderWidth: 2,
     paddingHorizontal: 8,
     borderRadius: 10,
-    color: "white",
+    // color: "white",
   },
 });
 
 type CustomInputType = {
   value: string;
   placeholder: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setValue?: React.Dispatch<React.SetStateAction<string>>;
 };
 function CustomInput({
   value,

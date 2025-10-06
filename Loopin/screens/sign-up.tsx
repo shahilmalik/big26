@@ -31,72 +31,60 @@ function SignUp({ setState }: signupType) {
   const [country, setCountry] = useState<string>("");
 
   const [step, setStep] = useState<number>(0);
-
   useEffect(() => {
+    console.log(step, "STEP");
     if (step == 5) {
       router.replace("/(tabs)/profile");
     }
   }, [step]);
 
   const handleSignup = async () => {
-  const signupData = {
-    email,
-    otp,
-    username,
-    password,
-    name,
-    gender,
-    dob,
-    city,
-    state: states,
-    country,
-  };
+    const signupData = {
+      email,
+      otp,
+      username,
+      password,
+      name,
+      gender,
+      dob,
+      city,
+      state: states,
+      country,
+    };
 
-  try {
-    const response = await fetch(`${env.API_URL}/api/auth/signup/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(signupData),
-    });
+    try {
+      const response = await fetch(`${env.API_URL}/api/auth/signup/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signupData),
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Signup error:", errorData);
-      alert("Signup failed. Please check your details.");
-      return;
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Signup error:", errorData);
+        alert("Signup failed. Please check your details.");
+        return;
+      }
+
+      const data = await response.json();
+      console.log("Signup success:", data);
+
+      // You can redirect or store token here if your API returns it
+      setStep(5); // Move to next step (profile screen)
+    } catch (error) {
+      console.error("Network error:", error);
+      alert("Something went wrong. Please try again.");
     }
-
-    const data = await response.json();
-    console.log("Signup success:", data);
-
-    // You can redirect or store token here if your API returns it
-    setStep(5); // Move to next step (profile screen)
-  } catch (error) {
-    console.error("Network error:", error);
-    alert("Something went wrong. Please try again.");
-  }
-};
+  };
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      // style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
     >
-      <Text
-        style={{
-          color: "white",
-          fontWeight: "bold",
-          fontSize: 30,
-          marginBottom: 15,
-          top: 10,
-          textAlign: "center",
-        }}
-      >
-        SIGN UP
-      </Text>
       {/* Dismiss keyboard when tapping outside */}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
@@ -177,21 +165,24 @@ function SignUp({ setState }: signupType) {
               )}
 
               <CustomButton
+                style={{ backgroundColor: "black" }}
+                color="white"
                 title={step == 4 ? "Sign up" : "Next"}
                 onPress={() => {
-                  if (step === 4) {
-                    handleSignup();
-                  } else {
-                    setStep((prev) => prev + 1);
-                  }
+                  // if (step === 4) {
+                  //   handleSignup();
+                  // } else {
+                  //   setStep((prev) => prev + 1);
+                  // }
+                  setStep((prev) => prev + 1);
                 }}
               />
 
               {step == 0 && (
                 <CustomButton
-                  bgColor="black"
-                  color="white"
-                  title="ALready have an account?"
+                  style={{ backgroundColor: "white" }}
+                  color="black"
+                  title="Already have an account?"
                   onPress={() => setState("signin")}
                 />
               )}

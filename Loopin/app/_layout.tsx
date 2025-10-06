@@ -30,11 +30,14 @@ export default function RootLayout() {
             name="login"
             options={{ headerShown: false, gestureEnabled: false }}
           />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          {/* <Stack.Screen
-          name="login"
-          options={{ headerShown: false, headerTitle: "Login" }}
-        /> */}
+          <Stack.Screen
+            name="(tabs)"
+            options={{ headerShown: false, headerTitle: "" }}
+          />
+          <Stack.Screen
+            name="profileEdit"
+            options={{ headerShown: true, headerTitle: "Edit Profile" }}
+          />
         </Stack>
         {/* <Text style={{ backgroundColor: colors.text }}>LAYOUT</Text> */}
         <StatusBar style="auto" />
