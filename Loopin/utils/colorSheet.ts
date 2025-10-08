@@ -6,7 +6,7 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-  background: "#000000",
+  background: "#181818",
   text: "#FFFFFF",
   primary: "#0A84FF",
   loginScreenBg: "#22333b",

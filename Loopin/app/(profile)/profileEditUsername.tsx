@@ -3,7 +3,10 @@ import { View, Button, Alert } from "react-native";
 import { router, useNavigation } from "expo-router";
 import MetaInput from "@/components/profile/MetaInput";
 import { useGlobal } from "@/context/GlobalContext";
+import { useTheme } from "@/hooks/useColors";
+
 function ProfileEditUsername() {
+  const { colors } = useTheme();
   const { profileData, setProfileData } = useGlobal();
   const [userName, setUserName] = useState(profileData.userName);
   const navigation = useNavigation();
@@ -23,7 +26,7 @@ function ProfileEditUsername() {
   }, [navigation, userName]);
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <View style={{ flex: 1, padding: 20, backgroundColor: colors.background }}>
       <MetaInput
         placeholder="Username"
         value={userName}

@@ -26,11 +26,9 @@ export const getTheme = async () => {
 
 export function useTheme() {
   const systemTheme = useColorScheme(); //native Theme
-  // console.log(systemTheme, Platform.OS, "System Theme");
   const [selectedTheme, setSelectedTheme] = useState<
     "light" | "dark" | "native"
   >("native");
-  // console.log(selectedTheme, "Selected Theme");
   useEffect(() => {
     const loadTheme = async () => {
       const theme = await getTheme();
@@ -39,12 +37,13 @@ export function useTheme() {
     loadTheme();
   });
 
-  const isDark =
-    selectedTheme === "dark"
-      ? true
-      : selectedTheme === "light"
-      ? false
-      : systemTheme === "dark";
+  const isDark = "dark";
+  // const isDark =
+  //   selectedTheme === "dark"
+  //     ? true
+  //     : selectedTheme === "light"
+  //     ? false
+  //     : systemTheme === "dark";
   return {
     isDark,
     colors: isDark ? darkTheme : lightTheme,

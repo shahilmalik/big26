@@ -1,13 +1,13 @@
 import React from "react";
 import { View } from "react-native";
 import { ThemedText } from "../themed-text";
-import { useTheme } from "@/hooks/useColors"; 
+import { useTheme } from "@/hooks/useColors";
 type titleCount = {
   count: number;
   title: string;
 };
 function TitleCount({ count, title }: titleCount) {
-  const {colors} = useTheme()
+  const { colors } = useTheme();
   return (
     <View
       style={{
@@ -19,7 +19,9 @@ function TitleCount({ count, title }: titleCount) {
       <ThemedText style={{ fontWeight: "bold", color: colors.text }}>
         {count}
       </ThemedText>
-      <ThemedText>{title}</ThemedText>
+      <ThemedText style={{  color: colors.text }}>
+        {title}
+      </ThemedText>
     </View>
   );
 }
