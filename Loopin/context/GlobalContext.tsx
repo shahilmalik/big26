@@ -1,21 +1,21 @@
-import { getTheme, storeTheme } from "@/hooks/useColors";
+// import { getTheme, storeTheme } from "@/hooks/useColors";
 import React, { createContext, useState, useContext, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Profiledata } from "@/utils/mockData";
-const printAllAsyncStorageItems = async () => {
-  try {
-    const keys = await AsyncStorage.getAllKeys();
-    const result = await AsyncStorage.multiGet(keys);
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+// const printAllAsyncStorageItems = async () => {
+//   try {
+//     const keys = await AsyncStorage.getAllKeys();
+//     const result = await AsyncStorage.multiGet(keys);
 
-    console.log("===== AsyncStorage Contents =====");
-    result.forEach(([key, value]) => {
-      console.log(`${key}: ${value}`);
-    });
-  } catch (error) {
-    console.error("Error reading AsyncStorage:", error);
-  }
-};
-printAllAsyncStorageItems();
+//     console.log("===== AsyncStorage Contents =====");
+//     result.forEach(([key, value]) => {
+//       console.log(`${key}: ${value}`);
+//     });
+//   } catch (error) {
+//     console.error("Error reading AsyncStorage:", error);
+//   }
+// };
+// printAllAsyncStorageItems();
 type GlobalContextType = {
   theme: "dark" | "light" | "native";
   setTheme: React.Dispatch<React.SetStateAction<"dark" | "light" | "native">>;

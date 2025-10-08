@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/theme";
-import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Button, Text, View } from "react-native";
 import { useTheme } from "@/hooks/useColors";
 import { useGlobal } from "@/context/GlobalContext";
 import CustomInput from "@/components/loginPage/CustomInput";
@@ -8,10 +8,17 @@ import CustomButton from "@/components/loginPage/CustomButton";
 import { router } from "expo-router";
 import MetaInput from "@/components/profile/MetaInput";
 import EditField from "@/components/profile/EditField";
+import { useNavigation } from "expo-router";
 function profileEdit() {
+  const navigation = useNavigation();
   const { profileData, setProfileData } = useGlobal();
   const { colors } = useTheme();
-
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Edit Name",
+      headerRight: () => <Button title="Save" />,
+    });
+  }, [navigation]);
   return (
     <View
       style={{

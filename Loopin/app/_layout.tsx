@@ -34,27 +34,6 @@ export default function RootLayout() {
             name="(tabs)"
             options={{ headerShown: false, headerTitle: "" }}
           />
-          <Stack.Screen
-            name="(profile)/profileEdit"
-            options={{ headerShown: true, headerTitle: "Edit Profile" }}
-          />
-          <Stack.Screen
-            name="(profile)/profileEditName"
-            options={{
-              headerShown: true,
-              headerTitle: "Edit Name",
-            }}
-          />
-          <Stack.Screen
-            name="(profile)/profileEditUsername"
-            options={{
-              headerShown: true,
-            }}
-          />
-          <Stack.Screen
-            name="(profile)/profileEditBio"
-            options={{ headerShown: true, headerTitle: "Edit Bio" }}
-          />
         </Stack>
         {/* <Text style={{ backgroundColor: colors.text }}>LAYOUT</Text> */}
         <StatusBar style="auto" />
