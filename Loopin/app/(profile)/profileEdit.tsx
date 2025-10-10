@@ -15,8 +15,7 @@ function profileEdit() {
   const { colors } = useTheme();
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "Edit Name",
-      headerRight: () => <Button title="Save" />,
+      headerTitle: "Edit Profile",
     });
   }, [navigation]);
   return (

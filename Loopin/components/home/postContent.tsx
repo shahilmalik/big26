@@ -1,6 +1,6 @@
 import { getFirstLetter } from "@/utils/helperFunction";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Haptics from "@/utils/haptics";
@@ -21,6 +21,7 @@ function PostContent({ name, time, content }: postContentType) {
       style={{
         flexDirection: "row",
         width: "100%",
+        minHeight: 100,
         // backgroundColor: "green",
         paddingHorizontal: 10,
         paddingVertical: 15,
@@ -55,34 +56,46 @@ function PostContent({ name, time, content }: postContentType) {
             <Text style={{ color: "white", fontWeight: "bold" }}>{name}</Text>
             <Text style={{ color: "grey", fontWeight: "bold" }}>{time}</Text>
           </View>
-          <Text
-            style={{
-              color: "white",
-              marginRight: 40,
-            }}
-          >
-            {content}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row", gap: 30 }}>
-          {heartActive ? (
-            <AntDesign
-              name="heart"
-              size={20}
-              color="red"
-              onPress={toggleHeart}
-            />
+          {content !== undefined ? (
+            <Text
+              style={{
+                color: "white",
+                marginRight: 40,
+              }}
+            >
+              {content}
+            </Text>
           ) : (
-            <FontAwesome6
-              name="heart"
-              size={20}
-              color="white"
-              onPress={toggleHeart}
-            />
+            <>
+              <TextInput
+                placeholder="Type your thoughts here..."
+                value={content}
+                placeholderTextColor="grey"
+              />
+            </>
           )}
-          <FontAwesome6 name="comment" size={20} color="white" />
-          <FontAwesome6 name="repeat" size={20} color="white" />
         </View>
+        {content != undefined && (
+          <View style={{ flexDirection: "row", gap: 30 }}>
+            {heartActive ? (
+              <AntDesign
+                name="heart"
+                size={20}
+                color="red"
+                onPress={toggleHeart}
+              />
+            ) : (
+              <FontAwesome6
+                name="heart"
+                size={20}
+                color="white"
+                onPress={toggleHeart}
+              />
+            )}
+            <FontAwesome6 name="comment" size={20} color="white" />
+            <FontAwesome6 name="repeat" size={20} color="white" />
+          </View>
+        )}
       </View>
     </View>
   );

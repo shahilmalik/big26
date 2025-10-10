@@ -4,12 +4,17 @@ import { router } from "expo-router";
 import React, { useEffect } from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { storeTheme, useTheme } from "@/hooks/useColors";
+import { useTheme } from "@/hooks/useColors";
 import CustomButton from "@/components/loginPage/CustomButton";
 import { useGlobal } from "@/context/GlobalContext";
 import { StatusBar } from "expo-status-bar";
+import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { useLocalSearchParams } from "expo-router";
 const debug = 0;
 function Profile() {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const navigation = useNavigation();
   const { colors } = useTheme();
   const { profileData } = useGlobal();
   // console.log(profileData, "PROFILE DATA");
@@ -23,7 +28,6 @@ function Profile() {
     >
       <StatusBar style="light" backgroundColor="black" />
       <SafeAreaView>
-        {/* <View style={{ flexDirection: "row", justifyContent: "space-between" }}> */}
         <ThemedText
           style={{
             textAlign: "center",
@@ -35,7 +39,6 @@ function Profile() {
           Profile
         </ThemedText>
 
-        {/* </View> */}
         <ScrollView
           contentContainerStyle={{
             gap: 20,
@@ -129,26 +132,31 @@ function Profile() {
               <TitleCount count={2} title="Repost" />
             </View>
           </View>
-          {/* Tabs GO here */}
-          <View
-            style={{
-              flexDirection: "row",
-              width: "49%",
-              gap: 5,
-              // backgroundColor: "green",
-            }}
-          >
-            <CustomButton
-              title="Edit Profile"
-              color="black"
-              onPress={() => router.push("/profileEdit")}
-              style={{ backgroundColor: "white" }}
-            />
-            <CustomButton
-              title="LOGOUT"
-              onPress={() => router.replace("/login")}
-            />
-          </View>
+          {id ? (
+            <>
+              <ThemedText>HELLO</ThemedText>
+            </>
+          ) : (
+            <View
+              style={{
+                flexDirection: "row",
+                width: "49%",
+                gap: 5,
+                // backgroundColor: "green",
+              }}
+            >
+              <CustomButton
+                title="Edit Profile"
+                color="black"
+                onPress={() => router.push("/profileEdit")}
+                style={{ backgroundColor: "white" }}
+              />
+              <CustomButton
+                title="LOGOUT"
+                onPress={() => router.replace("/login")}
+              />
+            </View>
+          )}
         </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>

@@ -3,8 +3,9 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@/hooks/useColors";
 import { useState } from "react";
 import { postMockData } from "@/utils/mockData";
-import { Text, ScrollView, View } from "react-native";
+import { Text, ScrollView, View, TouchableOpacity } from "react-native";
 import { getFirstLetter } from "@/utils/helperFunction";
+import { router } from "expo-router";
 export default function TabTwoScreen() {
   const { colors } = useTheme();
   const [search, setSearch] = useState<string>("");
@@ -32,8 +33,9 @@ export default function TabTwoScreen() {
               </Text>
             ) : (
               filteredPosts.map((post) => (
-                <View
+                <TouchableOpacity
                   key={post.id}
+                  onPress={() => router.push("/profile")}
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
@@ -76,7 +78,7 @@ export default function TabTwoScreen() {
                   >
                     {post.acc_name}
                   </Text>
-                </View>
+                </TouchableOpacity>
               ))
             )}
           </ScrollView>

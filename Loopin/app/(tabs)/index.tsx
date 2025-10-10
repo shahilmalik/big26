@@ -11,7 +11,7 @@ export default function HomeScreen() {
     <SafeAreaProvider style={{ backgroundColor: colors.background }}>
       <SafeAreaView>
         <ScrollView>
-          <PostContent name={profileData.name} />
+          <PostContent name={profileData.name}  />
           {/* <PostContent name="Ebrahim" /> */}
           {postMockData.map((item) => (
             <PostContent
